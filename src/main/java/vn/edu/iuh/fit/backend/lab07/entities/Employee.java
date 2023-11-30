@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.persistence.*;
+import vn.edu.iuh.fit.backend.lab07.converts.EmployeeStatusConvert;
+import vn.edu.iuh.fit.backend.lab07.converts.ProductStatusConvert;
 import vn.edu.iuh.fit.backend.lab07.enums.EmployeeStatus;
 
 import java.time.LocalDate;
@@ -35,7 +37,7 @@ public class Employee {
     @Column(name = "address", length = 250, nullable = false)
     private String address;
     @Column(name = "status", nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Convert(converter = EmployeeStatusConvert.class)
     private EmployeeStatus status;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)

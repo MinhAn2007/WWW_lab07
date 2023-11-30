@@ -2,6 +2,7 @@ package vn.edu.iuh.fit.backend.lab07.entities;
 
 
 import jakarta.persistence.*;
+import vn.edu.iuh.fit.backend.lab07.converts.ProductStatusConvert;
 import vn.edu.iuh.fit.backend.lab07.enums.ProductStatus;
 
 import java.util.ArrayList;
@@ -29,8 +30,8 @@ public class Product {
     private String unit;
     @Column(name = "manufacturer_name", length = 100, nullable = false)
     private String manufacturer;
-
-    @Column(name = "status")
+    @Convert(converter = ProductStatusConvert.class)
+    @Column(name = "status", nullable = false)
     private ProductStatus status;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

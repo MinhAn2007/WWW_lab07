@@ -1,14 +1,15 @@
 package vn.edu.iuh.fit.backend.lab07.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum EmployeeStatus {
     ACTIVE(1), DEACTIVE(0), DELETE(-1);
     private final int code;
     EmployeeStatus(int code) {
         this.code = code;
     }
-    public int getCode() {
-        return code;
-    }
+
     public static EmployeeStatus fromcode(int code) {
         for (EmployeeStatus status : EmployeeStatus.values()) {
             if (status.getCode() == code) {

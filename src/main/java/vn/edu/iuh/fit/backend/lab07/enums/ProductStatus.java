@@ -1,12 +1,11 @@
 package vn.edu.iuh.fit.backend.lab07.enums;
 
+import lombok.Getter;
+
+@Getter
 public enum ProductStatus {
     ACTIVE(1), DEACTIVE(0), DELETE(-1);
     private final int code;
-
-    public int getCode() {
-        return code;
-    }
 
     ProductStatus(int code) {
         this.code = code;
