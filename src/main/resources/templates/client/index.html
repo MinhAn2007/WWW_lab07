@@ -52,7 +52,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <form class="d-flex" th:action="@{/cart/view-cart}">
+                    <form class="d-flex" th:action="@{/shopping/cart}">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             My Cart
@@ -100,9 +100,11 @@
                             </div>
                             <!-- Product actions-->
                             <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-outline-dark mt-auto"
-                                                            th:href="@{shopping/add2cart/{id}(id=${product.product_id})}"
-                                >Add to cart</a></div>
+                                <div class="text-center">
+                                    <form th:action="@{/shopping/add2cart/{id}(id=${product.product_id})}" method="post">
+                                        <button type="submit" class="btn btn-outline-dark mt-auto">Add to cart</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

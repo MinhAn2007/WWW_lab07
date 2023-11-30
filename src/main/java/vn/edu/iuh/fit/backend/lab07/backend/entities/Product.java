@@ -53,6 +53,9 @@ public class Product {
         this.status = status;
     }
 
+    public Product(String s, double v) {
+    }
+
     public long getProduct_id() {
         return product_id;
     }

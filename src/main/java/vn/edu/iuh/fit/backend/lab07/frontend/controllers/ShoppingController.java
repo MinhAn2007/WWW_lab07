@@ -5,20 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import vn.edu.iuh.fit.backend.lab07.backend.entities.Product;
 import vn.edu.iuh.fit.backend.lab07.backend.repositories.ProductRepository;
 import vn.edu.iuh.fit.backend.lab07.backend.service.ProductService;
 import vn.edu.iuh.fit.backend.lab07.frontend.dto.CartItem;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -56,7 +50,7 @@ public class ShoppingController {
         return "client/index";
     }
 
-    @GetMapping("/add2cart/{id}")
+    @PostMapping("/add2cart/{id}")
     public String add2Cart(HttpSession session, Model model, @PathVariable("id") long id) {
         Object obj = session.getAttribute("items");
 
@@ -75,9 +69,22 @@ public class ShoppingController {
         cart.put(product.getProduct_id(),item);
 
         session.setAttribute("items", cart);
-
+        System.out.println(cart.values());
         session.setAttribute("itemsOnCart", cart.size());
 
         return "redirect:/shopping";
+    }
+
+    @GetMapping("/cart")
+    public String viewCart(Model model, HttpSession session) {
+        @SuppressWarnings("unchecked")
+        HashMap<Long, CartItem> cartMap = (HashMap<Long, CartItem>) session.getAttribute("items");
+        List<CartItem> cartItemList = CartItem.mapToCartItemList(cartMap);
+        List<Long> amountsList = CartItem.mapToAmountList(cartMap);
+        System.out.println("Cart Items: " + cartItemList);
+        System.out.println("Amounts: " + amountsList);
+        model.addAttribute("items",cartItemList);
+        model.addAttribute("itemsOnCart",session.getAttribute("itemsOnCart"));
+        return "client/checkout";
     }
 }
